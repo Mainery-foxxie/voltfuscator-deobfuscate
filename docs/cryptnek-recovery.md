@@ -1,0 +1,15 @@
+# Cryptnek recovery
+
+The Rust `--cryptnek INPUT OUTPUT_DIRECTORY` path targets the inspected local `CoPlay_Legit_Trivia_Only.luau` sample, SHA-256 `d3e200a3840ed5c46592083fbcb8c4b516095d48f9c4c55306d29c4c56543de3`. It does not claim compatibility with other Cryptnek builds. Exact source admission prevents changed handlers from being lifted with stale semantics.
+
+Established layers: custom 64-character packing alphabet, deterministic byte permutation, RC4, xorshift stream, big-endian constant/prototype records, an arithmetic-only bootstrap, per-function duplex-stream encryption and position-dependent opcode masks. Payload and bytecode DJB2 checksums are checked before unlocking. The bootstrap returns `4091517708`.
+
+All nine prototype graphs decode, with 2,369 raw reachable instruction records. The Rust analysis specializes the first numeric control selector and merges other primitive register facts conservatively. Known conditions may discard impossible edges; unknown conditions keep both edges. `decoded-instructions.json`, `specialized-cfg.json` and `source-map.json` preserve the raw records, transformed edges and original bytecode positions.
+
+Emission uses direct Luau operations and generated register tables. Shared closure cells and explicit argument/result packs preserve aliasing and nil values. Original author names are not recoverable from these records. The original admission and anti-analysis gates are omitted; comparisons assume an environment accepted by the original loader.
+
+Extraction does not execute the application or fetch embedded URLs. Regression comparisons use a separate restricted Luau runtime, inert local service/UI fixtures, fixed inputs and bounded execution. They can establish agreement for exercised paths, not universal equivalence with Roblox or remotely downloaded modules. Live services, executor hooks and external module behavior are outside local verification.
+
+The delivered source is `Downloads/CoPlay_Legit_Trivia_Only.lifted.luau`: 691 lines / 32,657 bytes, SHA-256 `0135f43644842ac4bd1b8f69741004879003e6c3650b61cb4167f59b5545e3e2`. Its artifact directory is `Downloads/Cryptnek-recovery-2026-11-20/`. All nine prototypes emit and compile with zero unresolved operations; 40 string literals are materialized. Primitive constant folding and dead literal-store removal reduce the initial 8,052-line register lift to 691 lines. Register tables and explicit result packs remain.
+
+Nine focused unit regressions and two local-sample tests pass. The sample tests compare six isolated functions with the original interpreter, then compare UI setup, registered button callbacks, movement, clipboard effects and a bounded background-job iteration in inert fixtures. The final full suite passed all 62 tests, including the existing chess regression; formatting passed and both CLI/bot binaries built. `verification.json` records artifact hashes and these local checks. Generated `report.json` deliberately records extraction and syntax evidence only, since the production command never runs application fixtures.
